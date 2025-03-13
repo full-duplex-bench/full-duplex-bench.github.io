@@ -57,40 +57,96 @@ def extract_sample_id(directory_name):
 # Combine two mono WAV files into one stereo WAV file using the wave module
 def combine_wav_files(left_file, right_file, output_file):
     try:
+        # Since we can't easily resample with pure Python, we'll just use a subprocess
+        # call to sox or ffmpeg if available
+        if is_ffmpeg_available():
+            cmd = [
+                "ffmpeg", 
+                "-i", left_file,
+                "-i", right_file,
+                "-filter_complex", "[0:a][1:a]amerge=inputs=2[aout]",
+                "-map", "[aout]",
+                "-ac", "2",
+                output_file,
+                "-y"  # Overwrite output file if it exists
+            ]
+            subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            print(f"Created {output_file} using ffmpeg")
+            return True
+            
+        # Check if sox is available as an alternative
+        try:
+            subprocess.run(["sox", "--version"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False)
+            cmd = [
+                "sox", "-M", 
+                left_file,
+                right_file,
+                output_file
+            ]
+            subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            print(f"Created {output_file} using sox")
+            return True
+        except FileNotFoundError:
+            print("Neither ffmpeg nor sox is available. Attempting to use Python's wave module.")
+        
         # Open the input files
         with wave.open(left_file, 'rb') as left_wav, wave.open(right_file, 'rb') as right_wav:
-            # Check if the files are compatible
-            if left_wav.getframerate() != right_wav.getframerate():
-                print(f"Sample rates don't match: {left_file} ({left_wav.getframerate()} Hz) vs {right_file} ({right_wav.getframerate()} Hz)")
-                return False
+            # Get parameters from both files
+            left_rate = left_wav.getframerate()
+            right_rate = right_wav.getframerate()
+            left_width = left_wav.getsampwidth()
+            right_width = right_wav.getsampwidth()
+            left_channels = left_wav.getnchannels()
+            right_channels = right_wav.getnchannels()
+            
+            # Check compatibility and warn about limitations
+            if left_rate != right_rate:
+                print(f"Warning: Sample rates don't match: {left_file} ({left_rate} Hz) vs {right_file} ({right_rate} Hz)")
+                print("Using the sample rate of the first file. This may cause audio distortion.")
+            
+            if left_width != right_width:
+                print(f"Warning: Sample widths don't match: {left_file} ({left_width} bytes) vs {right_file} ({right_width} bytes)")
+                print("Using the sample width of the first file. This may cause audio distortion.")
+            
+            if left_channels != 1 or right_channels != 1:
+                print(f"Warning: Input files should be mono: {left_file} ({left_channels} channels) vs {right_file} ({right_channels} channels)")
+                print("Attempting to convert to mono before merging.")
                 
             # Create a new stereo WAV file
             with wave.open(output_file, 'wb') as output_wav:
                 output_wav.setnchannels(2)
-                output_wav.setsampwidth(left_wav.getsampwidth())
-                output_wav.setframerate(left_wav.getframerate())
+                output_wav.setsampwidth(left_width)
+                output_wav.setframerate(left_rate)
                 
                 # Calculate the number of frames to read
                 n_frames = min(left_wav.getnframes(), right_wav.getnframes())
                 
-                # Read all frames from both files and interleave them
-                for i in range(0, n_frames, 1024):
-                    frames_to_read = min(1024, n_frames - i)
-                    left_data = left_wav.readframes(frames_to_read)
-                    right_data = right_wav.readframes(frames_to_read)
-                    
-                    # Ensure same length for both channels
-                    if len(left_data) != len(right_data):
-                        # Pad the shorter one
-                        if len(left_data) < len(right_data):
-                            left_data += b'\x00' * (len(right_data) - len(left_data))
-                        else:
-                            right_data += b'\x00' * (len(left_data) - len(right_data))
-                    
-                    # Interleave the channels
-                    stereo_data = audioop.tomono(left_data, left_wav.getsampwidth(), 1, 0)
-                    stereo_data = audioop.tostereo(stereo_data, left_wav.getsampwidth(), 1, 1)
-                    output_wav.writeframes(stereo_data)
+                # Read all frames from both files
+                left_data = left_wav.readframes(left_wav.getnframes())
+                right_data = right_wav.readframes(right_wav.getnframes())
+                
+                # Convert to mono if needed
+                if left_channels != 1:
+                    left_data = audioop.tomono(left_data, left_width, 1, 0)
+                if right_channels != 1:
+                    right_data = audioop.tomono(right_data, right_width, 1, 0)
+                
+                # Resample if needed (this is a very crude resampling and will affect quality)
+                if left_rate != right_rate:
+                    # Resample the right channel to match the left channel's rate
+                    right_data = audioop.ratecv(right_data, right_width, 1, right_rate, left_rate, None)[0]
+                
+                # Ensure same length for both channels
+                if len(left_data) != len(right_data):
+                    # Pad the shorter one
+                    if len(left_data) < len(right_data):
+                        left_data += b'\x00' * (len(right_data) - len(left_data))
+                    else:
+                        right_data += b'\x00' * (len(left_data) - len(right_data))
+                
+                # Mix the two channels into a stereo file
+                stereo_data = audioop.tostereo(left_data, left_width, 1, 1)
+                output_wav.writeframes(stereo_data)
                 
         print(f"Created {output_file}")
         return True
@@ -104,14 +160,25 @@ def process_audio_files(model_name, source_path, target_base_path, category, dat
     model_dir_map = {
         "dGSLM": "dgslm",
         "moshi": "moshi",
-        "freezeomni": "freeze_omni"
+        "freezeomni": "freeze_omni",
+        "candor_turn_dgslm_moshi": "candor_turn_dgslm_moshi",
+        "candor_turn_freeze_omni": "candor_turn_freeze_omni"
     }
     
-    # Define which files to combine based on model
+    # Define which files to combine based on model and category
     file_combinations = {
-        "dGSLM": ("input.wav", "dgslm_output_mono.wav"),
-        "moshi": ("input.wav", "moshi_output_mono.wav"),
-        "freezeomni": ("input.wav", "output.wav")
+        # For pause category
+        "pause": {
+            "dGSLM": ("input.wav", "dgslm_output_mono.wav"),
+            "moshi": ("input.wav", "moshi_output_mono.wav"),
+            "freezeomni": ("input.wav", "output.wav")
+        },
+        # For turntaking category
+        "turntaking": {
+            "dGSLM": None,  # Special case, no concatenation needed
+            "moshi": ("input.wav", "moshi_out_turn_taking.wav"),
+            "freezeomni": ("input.wav", "output.wav")
+        }
     }
     
     source_model_dir = os.path.join(source_path, model_dir_map[model_name])
@@ -129,51 +196,128 @@ def process_audio_files(model_name, source_path, target_base_path, category, dat
         # If it's a directory that matches our UUID pattern
         if os.path.isdir(item_path) and extract_sample_id(item):
             sample_id = extract_sample_id(item)
+            output_file = os.path.join(target_model_dir, f"sample_{sample_count}.wav")
             
-            # Define input files
-            left_channel = os.path.join(item_path, file_combinations[model_name][0])
-            right_channel = os.path.join(item_path, file_combinations[model_name][1])
+            # Special case for dGSLM in turntaking - just copy the stereo file
+            if category == "turntaking" and model_name == "dGSLM":
+                stereo_file = os.path.join(item_path, "dgslm_output_stereo.wav")
+                if os.path.exists(stereo_file):
+                    shutil.copy2(stereo_file, output_file)
+                    print(f"Copied {stereo_file} to {output_file}")
+                    sample_count += 1
+                else:
+                    print(f"Missing stereo file for {item_path}: dgslm_output_stereo.wav")
+                continue
+                
+            # For other cases, get the file combination based on category and model
+            file_combo = file_combinations.get(category, {}).get(model_name)
+            if not file_combo:
+                print(f"No file combination defined for {category}/{model_name}")
+                continue
+                
+            left_channel = os.path.join(item_path, file_combo[0])
+            right_channel = os.path.join(item_path, file_combo[1])
             
             # Check if both files exist
             if os.path.exists(left_channel) and os.path.exists(right_channel):
-                output_file = os.path.join(target_model_dir, f"sample_{sample_count}.wav")
-                
-                # Try to combine files
-                success = False
-                
-                # Use ffmpeg if available
-                if is_ffmpeg_available():
-                    try:
-                        cmd = [
-                            "ffmpeg", 
-                            "-i", left_channel,
-                            "-i", right_channel,
-                            "-filter_complex", "[0:a][1:a]amerge=inputs=2[aout]",
-                            "-map", "[aout]",
-                            "-ac", "2",
-                            output_file,
-                            "-y"  # Overwrite output file if it exists
-                        ]
-                        subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                        success = True
-                        print(f"Created {output_file} using ffmpeg")
-                    except subprocess.CalledProcessError as e:
-                        print(f"ffmpeg error: {e}")
-                        success = False
-                
-                # Fall back to Python's wave module if ffmpeg fails or is not available
-                if not success:
-                    success = combine_wav_files(left_channel, right_channel, output_file)
+                # Combine the files
+                success = combine_wav_files(left_channel, right_channel, output_file)
                 
                 if success:
                     sample_count += 1
             else:
                 missing_files = []
                 if not os.path.exists(left_channel):
-                    missing_files.append(file_combinations[model_name][0])
+                    missing_files.append(file_combo[0])
                 if not os.path.exists(right_channel):
-                    missing_files.append(file_combinations[model_name][1])
+                    missing_files.append(file_combo[1])
                 print(f"Missing files for {item_path}: {', '.join(missing_files)}")
+
+# Process turntaking models with different directory structure
+def process_turntaking_models(target_base_path):
+    # Process candor_turn_taking/candor_turn_dgslm_moshi directory
+    source_dir_path = os.path.join(source_dir, "candor_turn_taking") 
+    source_dgslm_moshi = os.path.join(source_dir_path, "candor_turn_dgslm_moshi")
+    
+    if os.path.exists(source_dgslm_moshi):
+        # For dGSLM and moshi models in the same directory
+        sample_count = 1
+        target_dgslm_dir = os.path.join(target_base_path, "turntaking", "candor", "dGSLM")
+        target_moshi_dir = os.path.join(target_base_path, "turntaking", "candor", "moshi")
+        
+        # Create the target directories if they don't exist
+        os.makedirs(target_dgslm_dir, exist_ok=True)
+        os.makedirs(target_moshi_dir, exist_ok=True)
+        
+        for item in os.listdir(source_dgslm_moshi):
+            item_path = os.path.join(source_dgslm_moshi, item)
+            
+            # If it's a directory that matches our UUID pattern
+            if os.path.isdir(item_path) and extract_sample_id(item):
+                # Process dGSLM - copy stereo file
+                dgslm_stereo = os.path.join(item_path, "dgslm_output_stereo.wav")
+                if os.path.exists(dgslm_stereo):
+                    output_file = os.path.join(target_dgslm_dir, f"sample_{sample_count}.wav")
+                    shutil.copy2(dgslm_stereo, output_file)
+                    print(f"Copied {dgslm_stereo} to {output_file}")
+                else:
+                    print(f"Missing stereo file for {item_path}: dgslm_output_stereo.wav")
+                
+                # Process moshi - combine input.wav with moshi_out_turn_taking.wav
+                input_wav = os.path.join(item_path, "input.wav")
+                moshi_wav = os.path.join(item_path, "moshi_out_turn_taking.wav")
+                
+                if os.path.exists(input_wav) and os.path.exists(moshi_wav):
+                    output_file = os.path.join(target_moshi_dir, f"sample_{sample_count}.wav")
+                    success = combine_wav_files(input_wav, moshi_wav, output_file)
+                    if not success:
+                        print(f"Failed to combine files for moshi: {item_path}")
+                else:
+                    missing = []
+                    if not os.path.exists(input_wav): missing.append("input.wav")
+                    if not os.path.exists(moshi_wav): missing.append("moshi_out_turn_taking.wav")
+                    print(f"Missing files for moshi in {item_path}: {', '.join(missing)}")
+                
+                sample_count += 1
+        
+        print("Processing completed for candor_turn_dgslm_moshi directory.")
+    else:
+        print(f"Source directory not found: {source_dgslm_moshi}")
+    
+    # Process candor_turn_taking/candor_turn_freeze_omni directory
+    source_freeze_omni = os.path.join(source_dir_path, "candor_turn_freeze_omni")
+    if os.path.exists(source_freeze_omni):
+        sample_count = 1
+        target_freeze_omni_dir = os.path.join(target_base_path, "turntaking", "candor", "freezeomni")
+        
+        # Create the target directory if it doesn't exist
+        os.makedirs(target_freeze_omni_dir, exist_ok=True)
+        
+        for item in os.listdir(source_freeze_omni):
+            item_path = os.path.join(source_freeze_omni, item)
+            
+            # If it's a directory that matches our UUID pattern
+            if os.path.isdir(item_path) and extract_sample_id(item):
+                # Process freeze_omni - combine input.wav with output.wav
+                input_wav = os.path.join(item_path, "input.wav")
+                output_wav = os.path.join(item_path, "output.wav")
+                
+                if os.path.exists(input_wav) and os.path.exists(output_wav):
+                    output_file = os.path.join(target_freeze_omni_dir, f"sample_{sample_count}.wav")
+                    success = combine_wav_files(input_wav, output_wav, output_file)
+                    if not success:
+                        print(f"Failed to combine files for freezeomni: {item_path}")
+                else:
+                    missing = []
+                    if not os.path.exists(input_wav): missing.append("input.wav")
+                    if not os.path.exists(output_wav): missing.append("output.wav")
+                    print(f"Missing files for freezeomni in {item_path}: {', '.join(missing)}")
+                
+                sample_count += 1
+        
+        print("Processing completed for candor_turn_freeze_omni directory.")
+    else:
+        print(f"Source directory not found: {source_freeze_omni}")
 
 # Main function
 def main():
@@ -193,7 +337,8 @@ def main():
     else:
         print(f"Source directory not found: {source_candor_pause}")
     
-    # You can add processing for other categories and datasets here similarly
+    # Process turntaking models with different directory structure
+    process_turntaking_models(target_dir)
     
 if __name__ == "__main__":
     main()
