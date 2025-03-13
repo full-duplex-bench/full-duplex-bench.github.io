@@ -1,0 +1,117 @@
+{
+    "text": " Yeah, I was just thinking about that. Yeah, right. It's like [UH] I was zero job.",
+    "chunks": [
+        {
+            "text": "Yeah,",
+            "timestamp": [
+                5.28,
+                5.8
+            ]
+        },
+        {
+            "text": "I",
+            "timestamp": [
+                6.260000000000001,
+                6.45
+            ]
+        },
+        {
+            "text": "was",
+            "timestamp": [
+                6.45,
+                6.59
+            ]
+        },
+        {
+            "text": "just",
+            "timestamp": [
+                6.59,
+                6.73
+            ]
+        },
+        {
+            "text": "thinking",
+            "timestamp": [
+                6.73,
+                6.95
+            ]
+        },
+        {
+            "text": "about",
+            "timestamp": [
+                6.95,
+                7.13
+            ]
+        },
+        {
+            "text": "that.",
+            "timestamp": [
+                7.13,
+                7.3
+            ]
+        },
+        {
+            "text": "Yeah,",
+            "timestamp": [
+                7.3,
+                7.54
+            ]
+        },
+        {
+            "text": "right.",
+            "timestamp": [
+                7.6000000000000005,
+                7.92
+            ]
+        },
+        {
+            "text": "It's",
+            "timestamp": [
+                7.920000000000001,
+                8.149999999999999
+            ]
+        },
+        {
+            "text": "like",
+            "timestamp": [
+                8.149999999999999,
+                8.36
+            ]
+        },
+        {
+            "text": "[UH]",
+            "timestamp": [
+                8.36,
+                8.76
+            ]
+        },
+        {
+            "text": "I",
+            "timestamp": [
+                8.9,
+                9.100000000000001
+            ]
+        },
+        {
+            "text": "was",
+            "timestamp": [
+                9.100000000000001,
+                9.24
+            ]
+        },
+        {
+            "text": "zero",
+            "timestamp": [
+                9.24,
+                9.46
+            ]
+        },
+        {
+            "text": "job.",
+            "timestamp": [
+                9.46,
+                9.72
+            ]
+        }
+    ]
+}

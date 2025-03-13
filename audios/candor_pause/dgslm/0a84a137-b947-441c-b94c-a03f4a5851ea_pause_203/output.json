@@ -1,0 +1,75 @@
+{
+    "text": "So I went to a very clean and I'm excited.",
+    "chunks": [
+        {
+            "text": "So",
+            "timestamp": [
+                0.0,
+                0.24
+            ]
+        },
+        {
+            "text": "I",
+            "timestamp": [
+                0.5800000000000001,
+                0.8999999999999999
+            ]
+        },
+        {
+            "text": "went",
+            "timestamp": [
+                0.8999999999999999,
+                1.07
+            ]
+        },
+        {
+            "text": "to",
+            "timestamp": [
+                1.07,
+                1.15
+            ]
+        },
+        {
+            "text": "a",
+            "timestamp": [
+                1.15,
+                1.23
+            ]
+        },
+        {
+            "text": "very",
+            "timestamp": [
+                1.23,
+                1.42
+            ]
+        },
+        {
+            "text": "clean",
+            "timestamp": [
+                1.42,
+                1.61
+            ]
+        },
+        {
+            "text": "and",
+            "timestamp": [
+                1.61,
+                1.77
+            ]
+        },
+        {
+            "text": "I'm",
+            "timestamp": [
+                1.77,
+                1.93
+            ]
+        },
+        {
+            "text": "excited.",
+            "timestamp": [
+                1.93,
+                2.48
+            ]
+        }
+    ]
+}

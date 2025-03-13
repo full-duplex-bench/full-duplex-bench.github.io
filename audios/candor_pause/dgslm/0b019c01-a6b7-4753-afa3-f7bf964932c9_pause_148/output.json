@@ -1,0 +1,40 @@
+{
+    "text": "My name is Thomas Apner.",
+    "chunks": [
+        {
+            "text": "My",
+            "timestamp": [
+                0.0,
+                0.6799999999999999
+            ]
+        },
+        {
+            "text": "name",
+            "timestamp": [
+                0.78,
+                0.97
+            ]
+        },
+        {
+            "text": "is",
+            "timestamp": [
+                0.97,
+                1.07
+            ]
+        },
+        {
+            "text": "Thomas",
+            "timestamp": [
+                1.07,
+                1.27
+            ]
+        },
+        {
+            "text": "Apner.",
+            "timestamp": [
+                1.27,
+                3.98
+            ]
+        }
+    ]
+}

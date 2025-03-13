@@ -1,0 +1,187 @@
+{
+    "text": "Middleway. Should [UH] the gay pet sound like would pay clout me the money [UH] I would go to the other side of country. There's no.",
+    "chunks": [
+        {
+            "text": "Middleway.",
+            "timestamp": [
+                0.0,
+                0.8
+            ]
+        },
+        {
+            "text": "Should",
+            "timestamp": [
+                1.26,
+                1.6400000000000001
+            ]
+        },
+        {
+            "text": "[UH]",
+            "timestamp": [
+                1.66,
+                1.94
+            ]
+        },
+        {
+            "text": "the",
+            "timestamp": [
+                2.2199999999999998,
+                2.42
+            ]
+        },
+        {
+            "text": "gay",
+            "timestamp": [
+                2.44,
+                2.71
+            ]
+        },
+        {
+            "text": "pet",
+            "timestamp": [
+                2.71,
+                3.08
+            ]
+        },
+        {
+            "text": "sound",
+            "timestamp": [
+                3.08,
+                3.41
+            ]
+        },
+        {
+            "text": "like",
+            "timestamp": [
+                3.41,
+                3.74
+            ]
+        },
+        {
+            "text": "would",
+            "timestamp": [
+                3.78,
+                4.18
+            ]
+        },
+        {
+            "text": "pay",
+            "timestamp": [
+                4.180000000000001,
+                4.6
+            ]
+        },
+        {
+            "text": "clout",
+            "timestamp": [
+                4.6000000000000005,
+                4.92
+            ]
+        },
+        {
+            "text": "me",
+            "timestamp": [
+                4.92,
+                5.07
+            ]
+        },
+        {
+            "text": "the",
+            "timestamp": [
+                5.07,
+                5.38
+            ]
+        },
+        {
+            "text": "money",
+            "timestamp": [
+                5.420000000000001,
+                5.66
+            ]
+        },
+        {
+            "text": "[UH]",
+            "timestamp": [
+                5.66,
+                5.890000000000001
+            ]
+        },
+        {
+            "text": "I",
+            "timestamp": [
+                5.890000000000001,
+                6.05
+            ]
+        },
+        {
+            "text": "would",
+            "timestamp": [
+                6.05,
+                6.42
+            ]
+        },
+        {
+            "text": "go",
+            "timestamp": [
+                6.44,
+                6.65
+            ]
+        },
+        {
+            "text": "to",
+            "timestamp": [
+                6.65,
+                6.859999999999999
+            ]
+        },
+        {
+            "text": "the",
+            "timestamp": [
+                6.86,
+                7.06
+            ]
+        },
+        {
+            "text": "other",
+            "timestamp": [
+                7.0600000000000005,
+                7.34
+            ]
+        },
+        {
+            "text": "side",
+            "timestamp": [
+                7.340000000000001,
+                7.67
+            ]
+        },
+        {
+            "text": "of",
+            "timestamp": [
+                7.67,
+                7.890000000000001
+            ]
+        },
+        {
+            "text": "country.",
+            "timestamp": [
+                7.890000000000001,
+                8.5
+            ]
+        },
+        {
+            "text": "There's",
+            "timestamp": [
+                8.76,
+                9.059999999999999
+            ]
+        },
+        {
+            "text": "no.",
+            "timestamp": [
+                9.059999999999999,
+                9.22
+            ]
+        }
+    ]
+}

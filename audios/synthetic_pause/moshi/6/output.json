@@ -1,0 +1,166 @@
+{
+    "text": "Then the prison was shipped off to calling [UM] you know, recent fight Cape and Jamborees can exactly know it's a police man.",
+    "chunks": [
+        {
+            "text": "Then",
+            "timestamp": [
+                0.0,
+                0.1
+            ]
+        },
+        {
+            "text": "the",
+            "timestamp": [
+                0.18,
+                0.36
+            ]
+        },
+        {
+            "text": "prison",
+            "timestamp": [
+                0.36,
+                0.74
+            ]
+        },
+        {
+            "text": "was",
+            "timestamp": [
+                0.74,
+                0.97
+            ]
+        },
+        {
+            "text": "shipped",
+            "timestamp": [
+                0.97,
+                1.1400000000000001
+            ]
+        },
+        {
+            "text": "off",
+            "timestamp": [
+                1.2,
+                1.45
+            ]
+        },
+        {
+            "text": "to",
+            "timestamp": [
+                1.45,
+                1.5899999999999999
+            ]
+        },
+        {
+            "text": "calling",
+            "timestamp": [
+                1.5899999999999999,
+                2.0300000000000002
+            ]
+        },
+        {
+            "text": "[UM]",
+            "timestamp": [
+                2.0300000000000002,
+                2.46
+            ]
+        },
+        {
+            "text": "you",
+            "timestamp": [
+                2.7199999999999998,
+                2.9699999999999998
+            ]
+        },
+        {
+            "text": "know,",
+            "timestamp": [
+                2.9699999999999998,
+                3.2199999999999998
+            ]
+        },
+        {
+            "text": "recent",
+            "timestamp": [
+                3.2199999999999998,
+                3.6
+            ]
+        },
+        {
+            "text": "fight",
+            "timestamp": [
+                3.64,
+                3.98
+            ]
+        },
+        {
+            "text": "Cape",
+            "timestamp": [
+                3.98,
+                4.29
+            ]
+        },
+        {
+            "text": "and",
+            "timestamp": [
+                4.29,
+                4.49
+            ]
+        },
+        {
+            "text": "Jamborees",
+            "timestamp": [
+                4.49,
+                4.96
+            ]
+        },
+        {
+            "text": "can",
+            "timestamp": [
+                5.04,
+                5.25
+            ]
+        },
+        {
+            "text": "exactly",
+            "timestamp": [
+                5.25,
+                5.699999999999999
+            ]
+        },
+        {
+            "text": "know",
+            "timestamp": [
+                5.9,
+                6.029999999999999
+            ]
+        },
+        {
+            "text": "it's",
+            "timestamp": [
+                6.029999999999999,
+                6.17
+            ]
+        },
+        {
+            "text": "a",
+            "timestamp": [
+                6.17,
+                6.24
+            ]
+        },
+        {
+            "text": "police",
+            "timestamp": [
+                6.24,
+                6.48
+            ]
+        },
+        {
+            "text": "man.",
+            "timestamp": [
+                6.48,
+                6.64
+            ]
+        }
+    ]
+}

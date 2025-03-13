@@ -1,0 +1,124 @@
+{
+    "text": " But any other the Enterbase A site, I was always walking around into Puppy Six this weekend.",
+    "chunks": [
+        {
+            "text": "But",
+            "timestamp": [
+                4.06,
+                4.42
+            ]
+        },
+        {
+            "text": "any",
+            "timestamp": [
+                4.420000000000001,
+                4.57
+            ]
+        },
+        {
+            "text": "other",
+            "timestamp": [
+                4.57,
+                4.75
+            ]
+        },
+        {
+            "text": "the",
+            "timestamp": [
+                4.75,
+                4.99
+            ]
+        },
+        {
+            "text": "Enterbase",
+            "timestamp": [
+                4.99,
+                5.319999999999999
+            ]
+        },
+        {
+            "text": "A",
+            "timestamp": [
+                5.32,
+                5.470000000000001
+            ]
+        },
+        {
+            "text": "site,",
+            "timestamp": [
+                5.470000000000001,
+                5.64
+            ]
+        },
+        {
+            "text": "I",
+            "timestamp": [
+                5.64,
+                5.73
+            ]
+        },
+        {
+            "text": "was",
+            "timestamp": [
+                5.73,
+                5.83
+            ]
+        },
+        {
+            "text": "always",
+            "timestamp": [
+                5.83,
+                6.03
+            ]
+        },
+        {
+            "text": "walking",
+            "timestamp": [
+                6.03,
+                6.3
+            ]
+        },
+        {
+            "text": "around",
+            "timestamp": [
+                6.3,
+                6.49
+            ]
+        },
+        {
+            "text": "into",
+            "timestamp": [
+                6.49,
+                6.66
+            ]
+        },
+        {
+            "text": "Puppy",
+            "timestamp": [
+                6.66,
+                6.91
+            ]
+        },
+        {
+            "text": "Six",
+            "timestamp": [
+                6.91,
+                7.12
+            ]
+        },
+        {
+            "text": "this",
+            "timestamp": [
+                7.12,
+                7.29
+            ]
+        },
+        {
+            "text": "weekend.",
+            "timestamp": [
+                7.29,
+                9.22
+            ]
+        }
+    ]
+}

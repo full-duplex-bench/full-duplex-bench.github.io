@@ -1,0 +1,110 @@
+{
+    "text": " Well, thanks for me. I was marrying a PhD student, PhD stems for [UH] PC.",
+    "chunks": [
+        {
+            "text": "Well,",
+            "timestamp": [
+                5.9,
+                6.26
+            ]
+        },
+        {
+            "text": "thanks",
+            "timestamp": [
+                6.28,
+                6.54
+            ]
+        },
+        {
+            "text": "for",
+            "timestamp": [
+                6.58,
+                6.73
+            ]
+        },
+        {
+            "text": "me.",
+            "timestamp": [
+                6.73,
+                6.94
+            ]
+        },
+        {
+            "text": "I",
+            "timestamp": [
+                6.94,
+                7.05
+            ]
+        },
+        {
+            "text": "was",
+            "timestamp": [
+                7.05,
+                7.3100000000000005
+            ]
+        },
+        {
+            "text": "marrying",
+            "timestamp": [
+                7.3100000000000005,
+                7.65
+            ]
+        },
+        {
+            "text": "a",
+            "timestamp": [
+                7.65,
+                7.75
+            ]
+        },
+        {
+            "text": "PhD",
+            "timestamp": [
+                7.75,
+                8.08
+            ]
+        },
+        {
+            "text": "student,",
+            "timestamp": [
+                8.16,
+                8.5
+            ]
+        },
+        {
+            "text": "PhD",
+            "timestamp": [
+                8.52,
+                8.860000000000001
+            ]
+        },
+        {
+            "text": "stems",
+            "timestamp": [
+                8.879999999999999,
+                9.2
+            ]
+        },
+        {
+            "text": "for",
+            "timestamp": [
+                9.2,
+                9.52
+            ]
+        },
+        {
+            "text": "[UH]",
+            "timestamp": [
+                9.52,
+                9.9
+            ]
+        },
+        {
+            "text": "PC.",
+            "timestamp": [
+                10.139999999999999,
+                10.64
+            ]
+        }
+    ]
+}

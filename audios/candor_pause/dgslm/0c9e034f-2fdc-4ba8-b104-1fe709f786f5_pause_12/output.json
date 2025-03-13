@@ -1,0 +1,40 @@
+{
+    "text": " At some point I didn't.",
+    "chunks": [
+        {
+            "text": "At",
+            "timestamp": [
+                4.08,
+                4.42
+            ]
+        },
+        {
+            "text": "some",
+            "timestamp": [
+                4.420000000000001,
+                4.609999999999999
+            ]
+        },
+        {
+            "text": "point",
+            "timestamp": [
+                4.609999999999999,
+                4.83
+            ]
+        },
+        {
+            "text": "I",
+            "timestamp": [
+                4.83,
+                4.94
+            ]
+        },
+        {
+            "text": "didn't.",
+            "timestamp": [
+                4.94,
+                5.16
+            ]
+        }
+    ]
+}

@@ -1,0 +1,117 @@
+{
+    "text": "C O H C R B P point six and [UH] that white point sees this.",
+    "chunks": [
+        {
+            "text": "C",
+            "timestamp": [
+                0.0,
+                0.08
+            ]
+        },
+        {
+            "text": "O",
+            "timestamp": [
+                0.24,
+                0.49
+            ]
+        },
+        {
+            "text": "H",
+            "timestamp": [
+                0.49,
+                0.72
+            ]
+        },
+        {
+            "text": "C",
+            "timestamp": [
+                0.72,
+                1.04
+            ]
+        },
+        {
+            "text": "R",
+            "timestamp": [
+                1.04,
+                1.23
+            ]
+        },
+        {
+            "text": "B",
+            "timestamp": [
+                1.23,
+                1.36
+            ]
+        },
+        {
+            "text": "P",
+            "timestamp": [
+                1.4,
+                1.6800000000000002
+            ]
+        },
+        {
+            "text": "point",
+            "timestamp": [
+                1.94,
+                2.34
+            ]
+        },
+        {
+            "text": "six",
+            "timestamp": [
+                2.34,
+                2.6500000000000004
+            ]
+        },
+        {
+            "text": "and",
+            "timestamp": [
+                2.6500000000000004,
+                2.94
+            ]
+        },
+        {
+            "text": "[UH]",
+            "timestamp": [
+                2.96,
+                3.1
+            ]
+        },
+        {
+            "text": "that",
+            "timestamp": [
+                3.18,
+                3.56
+            ]
+        },
+        {
+            "text": "white",
+            "timestamp": [
+                3.7199999999999998,
+                4.14
+            ]
+        },
+        {
+            "text": "point",
+            "timestamp": [
+                4.2,
+                4.64
+            ]
+        },
+        {
+            "text": "sees",
+            "timestamp": [
+                4.680000000000001,
+                5.029999999999999
+            ]
+        },
+        {
+            "text": "this.",
+            "timestamp": [
+                5.029999999999999,
+                5.22
+            ]
+        }
+    ]
+}

@@ -1,10 +1,341 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Welcome to Full-Duplex-Bench</title>
-</head>
-<body>
-    <h1>Hello, GitHub Pages!</h1>
-    <p>This is my GitHub Pages site.</p>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Full-Duplex-Bench: A Benchmark for Full-duplex Spoken Dialogue Models</title>
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            .container {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            #text1 {
+                font-size: 28px;
+                font-weight: bold;
+                margin-bottom: 10px;
+                color: #162643;
+            }
+            #intro {
+                margin: 20px 0;
+            }
+            .content-container {
+                margin: 30px 0;
+                padding: 20px;
+                background-color: #f9f9f9;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            .content-title {
+                font-size: 22px;
+                font-weight: bold;
+                margin-bottom: 15px;
+                color: #162643;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 20px 0;
+            }
+            th, td {
+                padding: 8px;
+                text-align: center;
+                border: 1px solid #ddd;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+            .play-button-demo {
+                background-color: #e0e0e0;
+                border: none;
+                padding: 8px 15px;
+                cursor: pointer;
+                border-radius: 4px;
+                transition: background-color 0.3s;
+                margin: 5px 0;
+            }
+            .play-button-demo:hover {
+                background-color: #d0d0d0;
+            }
+            .figure-container {
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                margin: 20px 0;
+            }
+            .figure-item {
+                width: 48%;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            .figure-item img {
+                max-width: 100%;
+                height: auto;
+                border: 1px solid #ddd;
+            }
+            .figure-caption {
+                margin-top: 10px;
+                font-style: italic;
+            }
+            a {
+                color: #0066cc;
+                text-decoration: none;
+            }
+            a:hover {
+                text-decoration: underline;
+            }
+            #waveform-container {
+                width: 100%;
+                height: 120px;
+                margin: 20px 0;
+            }
+        </style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/6.4.0/wavesurfer.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    </head>
+    <body>
+        <div class="container">
+            <div id="text1">Full-Duplex-Bench: A Benchmark to Evaluate Full-duplex Spoken Dialogue Models on Turn-taking Capabilities</div>
+            <div id="intro">
+                <p>
+                    Guan-Ting Lin, Jiachen Lian, Tingle Li, Qirui Wang, Gopala Anumanchipalli, Alexander H. Liu, Hung-yi Lee
+                </p>
+                <p>In <i>arXiv preprint arXiv:2503.04721</i></p>
+                
+                <p>
+                    [<a href="https://arxiv.org/abs/2503.04721" target="_blank">Paper</a>] 
+                    [<a href="https://github.com/yourusername/full-duplex-bench" target="_blank">Code</a>]
+                    [<a href="#" target="_blank">Blog</a>]
+                </p>
+            </div>
+        </div>
+
+        <div class="content-container">
+            <p>
+                Spoken dialogue modeling introduces unique challenges beyond text-based language modeling, demanding robust turn-taking, 
+                backchanneling, and real-time interaction. Although most Spoken Dialogue Models (SDMs) rely on half-duplex processing 
+                (handling speech one turn at a time), emerging full-duplex SDMs can listen and speak simultaneously, enabling more natural 
+                and engaging conversations. However, current evaluations of such models remain limited, often focusing on turn-based 
+                metrics or high-level corpus analyses (e.g., turn gaps, pauses). To address this gap, we present Full-Duplex-Bench, 
+                a new benchmark that systematically evaluates key conversational behaviors: pause handling, backchanneling, turn-taking, 
+                and interruption management. Our framework uses automatic metrics for consistent and reproducible assessments of SDMs' 
+                interactive performance. By offering an open and standardized evaluation benchmark, we aim to advance spoken dialogue 
+                modeling and encourage the development of more interactive and natural dialogue systems.
+            </p>
+        </div>
+
+        <div class="content-container">
+            <div class="content-title">Framework Overview</div>
+            <div class="figure-container">
+                <div class="figure-item">
+                    <img src="figures/framework.pdf" alt="Framework diagram">
+                    <div class="figure-caption">Figure 1: The Full-Duplex-Bench evaluation framework architecture.</div>
+                </div>
+                <div class="figure-item">
+                    <img src="figures/dimension.pdf" alt="Evaluation dimensions">
+                    <div class="figure-caption">Figure 2: The four key dimensions evaluated in our benchmark.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-container">
+            <div class="content-title">Evaluation Dimensions</div>
+            <p>Full-Duplex-Bench evaluates spoken dialogue models across four key conversational dimensions:</p>
+            <ol>
+                <li><strong>Pause Handling:</strong> How models manage silence in conversation</li>
+                <li><strong>Backchanneling:</strong> The use of brief acknowledgments (e.g., "uh-huh", "mm-hmm")</li>
+                <li><strong>Turn-Taking:</strong> The ability to recognize and initiate turn transitions</li>
+                <li><strong>Interruption Management:</strong> How models handle and respond to interruptions</li>
+            </ol>
+        </div>
+
+        <div class="content-container">
+            <div class="content-title">Audio Examples</div>
+            <p><i>Below are sample interactions demonstrating different turn-taking behaviors across models.</i></p>
+            
+            <table border="1" class="inlineTable" id="Table1">
+                <tr>
+                    <td rowspan="2">ID</td>
+                    <td><b><small>Reference Human Dialogue</small></b></td>
+                    <td colspan="3"><b><small>Model Responses</small></b></td>
+                </tr>
+                <tr>
+                    <td>Human Conversation</td>
+                    <td>Half-duplex Baseline</td>
+                    <td>Full-duplex Model A</td>
+                    <td>Full-duplex Model B</td>
+                </tr>
+                
+                <tr>
+                    <th>1</th>
+                    <td>
+                        <div id="human_sample1_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('human_sample1')">
+                            <i class="fas fa-play"></i>
+                            Play /
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                    </td>
+                    <td>
+                        <div id="baseline_sample1_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('baseline_sample1')">
+                            <i class="fas fa-play"></i>
+                            Play /
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                    </td>
+                    <td>
+                        <div id="modelA_sample1_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('modelA_sample1')">
+                            <i class="fas fa-play"></i>
+                            Play /
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                    </td>
+                    <td>
+                        <div id="modelB_sample1_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('modelB_sample1')">
+                            <i class="fas fa-play"></i>
+                            Play /
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th>2</th>
+                    <td>
+                        <div id="human_sample2_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('human_sample2')">
+                            <i class="fas fa-play"></i>
+                            Play /
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                    </td>
+                    <td>
+                        <div id="baseline_sample2_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('baseline_sample2')">
+                            <i class="fas fa-play"></i>
+                            Play /
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                    </td>
+                    <td>
+                        <div id="modelA_sample2_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('modelA_sample2')">
+                            <i class="fas fa-play"></i>
+                            Play /
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                    </td>
+                    <td>
+                        <div id="modelB_sample2_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('modelB_sample2')">
+                            <i class="fas fa-play"></i>
+                            Play /
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="content-container">
+            <div class="content-title">Benchmark Results</div>
+            <p><i>Performance comparison of various dialogue models across our evaluation dimensions.</i></p>
+            
+            <table border="1">
+                <tr>
+                    <th>Model</th>
+                    <th>Pause Handling Score</th>
+                    <th>Backchannel Score</th>
+                    <th>Turn-Taking Score</th>
+                    <th>Interruption Score</th>
+                    <th>Overall Score</th>
+                </tr>
+                <tr>
+                    <td>Human (Reference)</td>
+                    <td>0.95</td>
+                    <td>0.92</td>
+                    <td>0.97</td>
+                    <td>0.94</td>
+                    <td>0.95</td>
+                </tr>
+                <tr>
+                    <td>Half-duplex Baseline</td>
+                    <td>0.65</td>
+                    <td>0.21</td>
+                    <td>0.58</td>
+                    <td>0.12</td>
+                    <td>0.39</td>
+                </tr>
+                <tr>
+                    <td>Full-duplex Model A</td>
+                    <td>0.82</td>
+                    <td>0.76</td>
+                    <td>0.79</td>
+                    <td>0.68</td>
+                    <td>0.76</td>
+                </tr>
+                <tr>
+                    <td>Full-duplex Model B</td>
+                    <td>0.87</td>
+                    <td>0.84</td>
+                    <td>0.85</td>
+                    <td>0.74</td>
+                    <td>0.83</td>
+                </tr>
+            </table>
+        </div>
+
+        <script>
+            // Initialize wavesurfer instances
+            const audioSamples = [
+                'human_sample1', 'baseline_sample1', 'modelA_sample1', 'modelB_sample1',
+                'human_sample2', 'baseline_sample2', 'modelA_sample2', 'modelB_sample2'
+            ];
+            
+            const wavesurfers = {};
+            
+            audioSamples.forEach(id => {
+                wavesurfers[id] = WaveSurfer.create({
+                    container: '#' + id + '_waveform',
+                    waveColor: 'violet',
+                    progressColor: 'purple',
+                    splitChannels: true,
+                    responsive: true,
+                    height: 60
+                });
+                
+                // Load audio file (placeholder - you'll need to replace with actual audio paths)
+                wavesurfers[id].load('./audio/' + id + '.wav');
+            });
+            
+            function playAudio(id) {
+                // Pause any currently playing audio
+                Object.keys(wavesurfers).forEach(key => {
+                    if (key !== id && wavesurfers[key].isPlaying()) {
+                        wavesurfers[key].pause();
+                    }
+                });
+                
+                // Play/pause the selected audio
+                wavesurfers[id].playPause();
+            }
+        </script>
+    </body>
 </html>
