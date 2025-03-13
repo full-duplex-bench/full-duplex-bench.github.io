@@ -38,6 +38,17 @@
                 margin-bottom: 15px;
                 color: #162643;
             }
+            .dimension-section h3 {
+                color: #162643;
+                margin-top: 15px;
+                margin-bottom: 8px;
+                font-size: 18px;
+            }
+            .dimension-section p {
+                margin-top: 0;
+                margin-bottom: 15px;
+                padding-left: 10px;
+            }
             table {
                 width: 100%;
                 border-collapse: collapse;
@@ -108,7 +119,7 @@
                 </p>
                 
                 <p>
-                    [<a href="https://github.com/full-duplex-bench/full-duplex-bench" target="_blank">Code</a>]
+                    [<a href="https://github.com/DanielLin94144/Full-Duplex-Bench" target="_blank">Code</a>]
                 </p>
             </div>
         </div>
@@ -131,11 +142,11 @@
             <div class="content-title">Framework Overview</div>
             <div class="figure-container">
                 <div class="figure-item">
-                    <img src="images/framework.png" alt="Framework diagram">
+                    <img src="images/framework.png" alt="Framework diagram" style="height: 300px; width: auto;">
                     <div class="figure-caption">Figure 1: The Full-Duplex-Bench evaluation framework architecture.</div>
                 </div>
                 <div class="figure-item">
-                    <img src="images/dimension.png" alt="Evaluation dimensions">
+                    <img src="images/dimension.png" alt="Evaluation dimensions" style="height: 300px; width: auto;">
                     <div class="figure-caption">Figure 2: The four key dimensions evaluated in our benchmark.</div>
                 </div>
             </div>
@@ -144,12 +155,20 @@
         <div class="content-container">
             <div class="content-title">Evaluation Dimensions</div>
             <p>Full-Duplex-Bench evaluates spoken dialogue models across four key conversational dimensions:</p>
-            <ol>
-                <li><strong>Pause Handling:</strong> How models manage silence in conversation</li>
-                <li><strong>Backchanneling:</strong> The use of brief acknowledgments (e.g., "uh-huh", "mm-hmm")</li>
-                <li><strong>Turn-Taking:</strong> The ability to recognize and initiate turn transitions</li>
-                <li><strong>Interruption Management:</strong> How models handle and respond to interruptions</li>
-            </ol>
+            
+            <div class="dimension-section">
+                <h3>1. Pause Handling</h3>
+                <p>Evaluates if models can recognize when a speaker pauses but still holds the turn. The ideal model avoids taking over during natural pauses. Measured by Takeover Rate (TOR) - lower is better.</p>
+                
+                <h3>2. Backchanneling</h3>
+                <p>Assesses if models provide appropriate listener responses (e.g., "uh-huh," "mm-hmm") without interrupting. Measured by Takeover Rate, Backchannel Frequency, and Jensen-Shannon Divergence (JSD) to compare model timing with human behavior.</p>
+                
+                <h3>3. Smooth Turn-Taking</h3>
+                <p>Tests if models can detect turn boundaries and respond promptly. Measured by Response Latency - the time between the end of user speech and the start of model response. Lower latency indicates smoother turn-taking.</p>
+                
+                <h3>4. User Interruption</h3>
+                <p>Examines how models handle and adapt to interruptions. Evaluated using Takeover Rate, GPT-4o Score (for response quality), and Latency After Interruption to measure response time following interruptions.</p>
+            </div>
         </div>
 
         <div class="content-container">
