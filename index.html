@@ -173,26 +173,27 @@
 
         <div class="content-container">
             <div class="content-title">Audio Examples</div>
-            <p><i>Below are sample interactions demonstrating different turn-taking behaviors across models.</i></p>
+            <p><i>Below are sample interactions demonstrating different model behaviors across our evaluation dimensions.</i></p>
             
-            <table border="1" class="inlineTable" id="Table1">
+            <!-- Pause Handling Examples -->
+            <h3>Pause Handling</h3>
+            <table border="1" class="inlineTable">
                 <tr>
-                    <td rowspan="2">ID</td>
-                    <td><b><small>Reference Human Dialogue</small></b></td>
+                    <td rowspan="2">Sample ID</td>
                     <td colspan="3"><b><small>Model Responses</small></b></td>
                 </tr>
                 <tr>
-                    <td>Human Conversation</td>
-                    <td>Half-duplex Baseline</td>
-                    <td>Full-duplex Model A</td>
-                    <td>Full-duplex Model B</td>
+                    <td>dGSLM</td>
+                    <td>Moshi</td>
+                    <td>Freeze-Omni</td>
                 </tr>
                 
+                <!-- 5 samples for Pause Handling -->
                 <tr>
                     <th>1</th>
                     <td>
-                        <div id="human_sample1_waveform"></div>
-                        <button class="play-button-demo" onclick="playAudio('human_sample1')">
+                        <div id="pause_dGSLM_1_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('pause_dGSLM_1')">
                             <i class="fas fa-play"></i>
                             Play /
                             <i class="fas fa-pause"></i>
@@ -200,8 +201,8 @@
                         </button>
                     </td>
                     <td>
-                        <div id="baseline_sample1_waveform"></div>
-                        <button class="play-button-demo" onclick="playAudio('baseline_sample1')">
+                        <div id="pause_moshi_1_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('pause_moshi_1')">
                             <i class="fas fa-play"></i>
                             Play /
                             <i class="fas fa-pause"></i>
@@ -209,17 +210,8 @@
                         </button>
                     </td>
                     <td>
-                        <div id="modelA_sample1_waveform"></div>
-                        <button class="play-button-demo" onclick="playAudio('modelA_sample1')">
-                            <i class="fas fa-play"></i>
-                            Play /
-                            <i class="fas fa-pause"></i>
-                            Pause
-                        </button>
-                    </td>
-                    <td>
-                        <div id="modelB_sample1_waveform"></div>
-                        <button class="play-button-demo" onclick="playAudio('modelB_sample1')">
+                        <div id="pause_freezeomni_1_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('pause_freezeomni_1')">
                             <i class="fas fa-play"></i>
                             Play /
                             <i class="fas fa-pause"></i>
@@ -227,12 +219,12 @@
                         </button>
                     </td>
                 </tr>
-                
+                <!-- More samples (2-5) follow the same pattern -->
                 <tr>
                     <th>2</th>
                     <td>
-                        <div id="human_sample2_waveform"></div>
-                        <button class="play-button-demo" onclick="playAudio('human_sample2')">
+                        <div id="pause_dGSLM_2_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('pause_dGSLM_2')">
                             <i class="fas fa-play"></i>
                             Play /
                             <i class="fas fa-pause"></i>
@@ -240,8 +232,8 @@
                         </button>
                     </td>
                     <td>
-                        <div id="baseline_sample2_waveform"></div>
-                        <button class="play-button-demo" onclick="playAudio('baseline_sample2')">
+                        <div id="pause_moshi_2_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('pause_moshi_2')">
                             <i class="fas fa-play"></i>
                             Play /
                             <i class="fas fa-pause"></i>
@@ -249,17 +241,8 @@
                         </button>
                     </td>
                     <td>
-                        <div id="modelA_sample2_waveform"></div>
-                        <button class="play-button-demo" onclick="playAudio('modelA_sample2')">
-                            <i class="fas fa-play"></i>
-                            Play /
-                            <i class="fas fa-pause"></i>
-                            Pause
-                        </button>
-                    </td>
-                    <td>
-                        <div id="modelB_sample2_waveform"></div>
-                        <button class="play-button-demo" onclick="playAudio('modelB_sample2')">
+                        <div id="pause_freezeomni_2_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('pause_freezeomni_2')">
                             <i class="fas fa-play"></i>
                             Play /
                             <i class="fas fa-pause"></i>
@@ -267,6 +250,241 @@
                         </button>
                     </td>
                 </tr>
+                <!-- Remaining rows for samples 3-5 would go here -->
+            </table>
+            
+            <!-- Backchanneling Examples -->
+            <h3>Backchanneling</h3>
+            <table border="1" class="inlineTable">
+                <tr>
+                    <td rowspan="2">Sample ID</td>
+                    <td colspan="3"><b><small>Model Responses</small></b></td>
+                </tr>
+                <tr>
+                    <td>dGSLM</td>
+                    <td>Moshi</td>
+                    <td>Freeze-Omni</td>
+                </tr>
+                
+                <!-- 5 samples for Backchanneling -->
+                <tr>
+                    <th>1</th>
+                    <td>
+                        <div id="backchannel_dGSLM_1_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('backchannel_dGSLM_1')">
+                            <i class="fas fa-play"></i>
+                            Play /
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                    </td>
+                    <td>
+                        <div id="backchannel_moshi_1_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('backchannel_moshi_1')">
+                            <i class="fas fa-play"></i>
+                            Play /
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                    </td>
+                    <td>
+                        <div id="backchannel_freezeomni_1_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('backchannel_freezeomni_1')">
+                            <i class="fas fa-play"></i>
+                            Play /
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                    </td>
+                </tr>
+                <!-- More samples (2-5) follow the same pattern -->
+                <tr>
+                    <th>2</th>
+                    <td>
+                        <div id="backchannel_dGSLM_2_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('backchannel_dGSLM_2')">
+                            <i class="fas fa-play"></i>
+                            Play /
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                    </td>
+                    <td>
+                        <div id="backchannel_moshi_2_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('backchannel_moshi_2')">
+                            <i class="fas fa-play"></i>
+                            Play /
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                    </td>
+                    <td>
+                        <div id="backchannel_freezeomni_2_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('backchannel_freezeomni_2')">
+                            <i class="fas fa-play"></i>
+                            Play /
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                    </td>
+                </tr>
+                <!-- Remaining rows for samples 3-5 would go here -->
+            </table>
+            
+            <!-- Turn-Taking Examples -->
+            <h3>Turn-Taking</h3>
+            <table border="1" class="inlineTable">
+                <tr>
+                    <td rowspan="2">Sample ID</td>
+                    <td colspan="3"><b><small>Model Responses</small></b></td>
+                </tr>
+                <tr>
+                    <td>dGSLM</td>
+                    <td>Moshi</td>
+                    <td>Freeze-Omni</td>
+                </tr>
+                
+                <!-- 5 samples for Turn-Taking -->
+                <tr>
+                    <th>1</th>
+                    <td>
+                        <div id="turntaking_dGSLM_1_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('turntaking_dGSLM_1')">
+                            <i class="fas fa-play"></i>
+                            Play /
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                    </td>
+                    <td>
+                        <div id="turntaking_moshi_1_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('turntaking_moshi_1')">
+                            <i class="fas fa-play"></i>
+                            Play /
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                    </td>
+                    <td>
+                        <div id="turntaking_freezeomni_1_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('turntaking_freezeomni_1')">
+                            <i class="fas fa-play"></i>
+                            Play /
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                    </td>
+                </tr>
+                <!-- More samples (2-5) follow the same pattern -->
+                <tr>
+                    <th>2</th>
+                    <td>
+                        <div id="turntaking_dGSLM_2_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('turntaking_dGSLM_2')">
+                            <i class="fas fa-play"></i>
+                            Play /
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                    </td>
+                    <td>
+                        <div id="turntaking_moshi_2_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('turntaking_moshi_2')">
+                            <i class="fas fa-play"></i>
+                            Play /
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                    </td>
+                    <td>
+                        <div id="turntaking_freezeomni_2_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('turntaking_freezeomni_2')">
+                            <i class="fas fa-play"></i>
+                            Play /
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                    </td>
+                </tr>
+                <!-- Remaining rows for samples 3-5 would go here -->
+            </table>
+            
+            <!-- Interruption Examples -->
+            <h3>Interruption Management</h3>
+            <table border="1" class="inlineTable">
+                <tr>
+                    <td rowspan="2">Sample ID</td>
+                    <td colspan="3"><b><small>Model Responses</small></b></td>
+                </tr>
+                <tr>
+                    <td>dGSLM</td>
+                    <td>Moshi</td>
+                    <td>Freeze-Omni</td>
+                </tr>
+                
+                <!-- 5 samples for Interruption Management -->
+                <tr>
+                    <th>1</th>
+                    <td>
+                        <div id="interruption_dGSLM_1_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('interruption_dGSLM_1')">
+                            <i class="fas fa-play"></i>
+                            Play /
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                    </td>
+                    <td>
+                        <div id="interruption_moshi_1_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('interruption_moshi_1')">
+                            <i class="fas fa-play"></i>
+                            Play /
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                    </td>
+                    <td>
+                        <div id="interruption_freezeomni_1_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('interruption_freezeomni_1')">
+                            <i class="fas fa-play"></i>
+                            Play /
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                    </td>
+                </tr>
+                <!-- More samples (2-5) follow the same pattern -->
+                <tr>
+                    <th>2</th>
+                    <td>
+                        <div id="interruption_dGSLM_2_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('interruption_dGSLM_2')">
+                            <i class="fas fa-play"></i>
+                            Play /
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                    </td>
+                    <td>
+                        <div id="interruption_moshi_2_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('interruption_moshi_2')">
+                            <i class="fas fa-play"></i>
+                            Play /
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                    </td>
+                    <td>
+                        <div id="interruption_freezeomni_2_waveform"></div>
+                        <button class="play-button-demo" onclick="playAudio('interruption_freezeomni_2')">
+                            <i class="fas fa-play"></i>
+                            Play /
+                            <i class="fas fa-pause"></i>
+                            Pause
+                        </button>
+                    </td>
+                </tr>
+                <!-- Remaining rows for samples 3-5 would go here -->
             </table>
         </div>
 
@@ -320,25 +538,31 @@
 
         <script>
             // Initialize wavesurfer instances
-            const audioSamples = [
-                'human_sample1', 'baseline_sample1', 'modelA_sample1', 'modelB_sample1',
-                'human_sample2', 'baseline_sample2', 'modelA_sample2', 'modelB_sample2'
-            ];
+            const audioCategories = ['pause', 'backchannel', 'turntaking', 'interruption'];
+            const models = ['dGSLM', 'moshi', 'freezeomni'];
+            const samples = [1, 2]; // Just showing samples 1-2 for now, can expand to 1-5
             
             const wavesurfers = {};
             
-            audioSamples.forEach(id => {
-                wavesurfers[id] = WaveSurfer.create({
-                    container: '#' + id + '_waveform',
-                    waveColor: 'violet',
-                    progressColor: 'purple',
-                    splitChannels: true,
-                    responsive: true,
-                    height: 60
+            // Create all wavesurfer instances
+            audioCategories.forEach(category => {
+                models.forEach(model => {
+                    samples.forEach(sample => {
+                        const id = `${category}_${model}_${sample}`;
+                        wavesurfers[id] = WaveSurfer.create({
+                            container: `#${id}_waveform`,
+                            waveColor: 'violet',
+                            progressColor: 'purple',
+                            splitChannels: true,
+                            responsive: true,
+                            height: 60
+                        });
+                        
+                        // Load audio file (paths will need to be updated)
+                        const audioPath = `./audio/${category}/${model}/sample_${sample}.wav`;
+                        wavesurfers[id].load(audioPath);
+                    });
                 });
-                
-                // Load audio file (placeholder - you'll need to replace with actual audio paths)
-                wavesurfers[id].load('./audio/' + id + '.wav');
             });
             
             function playAudio(id) {
