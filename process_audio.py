@@ -54,8 +54,8 @@ def extract_sample_id(directory_name):
         return directory_name[:8]  # Take first 8 chars of UUID as sample ID
     return None
 
-# Combine two mono WAV files into one stereo WAV file using the wave module
-def combine_wav_files(left_file, right_file, output_file):
+# Combine two mono WAV files into one stereo WAV file
+def combine_wav_files(left_file, right_file, output_file, target_sample_rate=48000):
     try:
         # Since we can't easily resample with pure Python, we'll just use a subprocess
         # call to sox or ffmpeg if available
@@ -67,11 +67,12 @@ def combine_wav_files(left_file, right_file, output_file):
                 "-filter_complex", "[0:a][1:a]amerge=inputs=2[aout]",
                 "-map", "[aout]",
                 "-ac", "2",
+                "-ar", str(target_sample_rate),  # Set target sample rate
                 output_file,
                 "-y"  # Overwrite output file if it exists
             ]
             subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            print(f"Created {output_file} using ffmpeg")
+            print(f"Created {output_file} using ffmpeg at {target_sample_rate}Hz")
             return True
             
         # Check if sox is available as an alternative
@@ -81,10 +82,11 @@ def combine_wav_files(left_file, right_file, output_file):
                 "sox", "-M", 
                 left_file,
                 right_file,
-                output_file
+                output_file,
+                "rate", str(target_sample_rate)  # Set target sample rate
             ]
             subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            print(f"Created {output_file} using sox")
+            print(f"Created {output_file} using sox at {target_sample_rate}Hz")
             return True
         except FileNotFoundError:
             print("Neither ffmpeg nor sox is available. Attempting to use Python's wave module.")
@@ -374,7 +376,7 @@ def process_synthetic_pause(target_base_path):
         print(f"Source directory not found: {source_moshi}")
 
 # Helper function to process directories with numeric names
-def process_numeric_directories(source_dir, target_dir, left_file, right_file, combine=True):
+def process_numeric_directories(source_dir, target_dir, left_file, right_file, combine=True, target_sample_rate=48000):
     sample_count = 1
     
     # Get all numeric directories
@@ -382,6 +384,9 @@ def process_numeric_directories(source_dir, target_dir, left_file, right_file, c
     
     # Sort numerically
     dir_items.sort(key=int)
+    
+    # Debug output to help diagnose missing files
+    print(f"Processing {source_dir}, found {len(dir_items)} numeric directories: {dir_items}")
     
     for item in dir_items:
         item_path = os.path.join(source_dir, item)
@@ -393,7 +398,7 @@ def process_numeric_directories(source_dir, target_dir, left_file, right_file, c
             right_path = os.path.join(item_path, right_file)
             
             if os.path.exists(left_path) and os.path.exists(right_path):
-                success = combine_wav_files(left_path, right_path, output_file)
+                success = combine_wav_files(left_path, right_path, output_file, target_sample_rate)
                 if success:
                     sample_count += 1
                 else:
@@ -404,11 +409,25 @@ def process_numeric_directories(source_dir, target_dir, left_file, right_file, c
                 if not os.path.exists(right_path): missing.append(right_file)
                 print(f"Missing files for {item_path}: {', '.join(missing)}")
         else:
-            # Just copy a single file
+            # Just copy a single file but ensure consistent sample rate
             source_file = os.path.join(item_path, right_file)
             if os.path.exists(source_file):
-                shutil.copy2(source_file, output_file)
-                print(f"Copied {source_file} to {output_file}")
+                if is_ffmpeg_available():
+                    # Convert to target sample rate using ffmpeg
+                    cmd = [
+                        "ffmpeg",
+                        "-i", source_file,
+                        "-ar", str(target_sample_rate),  # Set target sample rate
+                        "-y",  # Overwrite output file if it exists
+                        output_file
+                    ]
+                    subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                    print(f"Converted {source_file} to {output_file} at {target_sample_rate}Hz")
+                else:
+                    # Just copy if ffmpeg is not available
+                    shutil.copy2(source_file, output_file)
+                    print(f"Copied {source_file} to {output_file} (could not set sample rate)")
+                
                 sample_count += 1
             else:
                 print(f"Missing file for {item_path}: {right_file}")
