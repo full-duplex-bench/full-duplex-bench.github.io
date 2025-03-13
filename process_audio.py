@@ -319,6 +319,105 @@ def process_turntaking_models(target_base_path):
     else:
         print(f"Source directory not found: {source_freeze_omni}")
 
+# Process synthetic_pause models
+def process_synthetic_pause(target_base_path):
+    source_synthetic_pause = os.path.join(source_dir, "synthetic_pause")
+    
+    if not os.path.exists(source_synthetic_pause):
+        print(f"Source directory not found: {source_synthetic_pause}")
+        return
+    
+    # Process dGSLM model
+    source_dgslm = os.path.join(source_synthetic_pause, "dgslm")
+    if os.path.exists(source_dgslm):
+        target_dgslm_dir = os.path.join(target_base_path, "pause", "synthetic", "dGSLM")
+        os.makedirs(target_dgslm_dir, exist_ok=True)
+        
+        process_numeric_directories(
+            source_dgslm, 
+            target_dgslm_dir, 
+            "input.wav", 
+            "dgslm_output_stereo.wav",
+            combine=True
+        )
+        print("Processing completed for synthetic_pause/dgslm directory.")
+    else:
+        print(f"Source directory not found: {source_dgslm}")
+    
+    # Process freeze_omni model
+    source_freezeomni = os.path.join(source_synthetic_pause, "freeze_omni")
+    if os.path.exists(source_freezeomni):
+        target_freezeomni_dir = os.path.join(target_base_path, "pause", "synthetic", "freezeomni")
+        os.makedirs(target_freezeomni_dir, exist_ok=True)
+        
+        process_numeric_directories(
+            source_freezeomni, 
+            target_freezeomni_dir, 
+            "input.wav", 
+            "output.wav",
+            combine=True
+        )
+        print("Processing completed for synthetic_pause/freeze_omni directory.")
+    else:
+        print(f"Source directory not found: {source_freezeomni}")
+    
+    # Process moshi model
+    source_moshi = os.path.join(source_synthetic_pause, "moshi")
+    if os.path.exists(source_moshi):
+        target_moshi_dir = os.path.join(target_base_path, "pause", "synthetic", "moshi")
+        os.makedirs(target_moshi_dir, exist_ok=True)
+        
+        process_numeric_directories(
+            source_moshi, 
+            target_moshi_dir, 
+            None, 
+            "moshi_out.wav",
+            combine=False
+        )
+        print("Processing completed for synthetic_pause/moshi directory.")
+    else:
+        print(f"Source directory not found: {source_moshi}")
+
+# Helper function to process directories with numeric names
+def process_numeric_directories(source_dir, target_dir, left_file, right_file, combine=True):
+    sample_count = 1
+    
+    # Get all numeric directories
+    dir_items = [item for item in os.listdir(source_dir) if item.isdigit() and os.path.isdir(os.path.join(source_dir, item))]
+    
+    # Sort numerically
+    dir_items.sort(key=int)
+    
+    for item in dir_items:
+        item_path = os.path.join(source_dir, item)
+        output_file = os.path.join(target_dir, f"sample_{sample_count}.wav")
+        
+        if combine:
+            # Combine two files
+            left_path = os.path.join(item_path, left_file)
+            right_path = os.path.join(item_path, right_file)
+            
+            if os.path.exists(left_path) and os.path.exists(right_path):
+                success = combine_wav_files(left_path, right_path, output_file)
+                if success:
+                    sample_count += 1
+                else:
+                    print(f"Failed to combine files for {item_path}")
+            else:
+                missing = []
+                if not os.path.exists(left_path): missing.append(left_file)
+                if not os.path.exists(right_path): missing.append(right_file)
+                print(f"Missing files for {item_path}: {', '.join(missing)}")
+        else:
+            # Just copy a single file
+            source_file = os.path.join(item_path, right_file)
+            if os.path.exists(source_file):
+                shutil.copy2(source_file, output_file)
+                print(f"Copied {source_file} to {output_file}")
+                sample_count += 1
+            else:
+                print(f"Missing file for {item_path}: {right_file}")
+
 # Main function
 def main():
     # Create the new directory structure
@@ -339,6 +438,9 @@ def main():
     
     # Process turntaking models with different directory structure
     process_turntaking_models(target_dir)
+    
+    # Process synthetic_pause models
+    process_synthetic_pause(target_dir)
     
 if __name__ == "__main__":
     main()
