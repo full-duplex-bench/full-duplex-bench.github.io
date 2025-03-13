@@ -398,11 +398,15 @@ def process_numeric_directories(source_dir, target_dir, left_file, right_file, c
             right_path = os.path.join(item_path, right_file)
             
             if os.path.exists(left_path) and os.path.exists(right_path):
-                success = combine_wav_files(left_path, right_path, output_file, target_sample_rate)
-                if success:
-                    sample_count += 1
-                else:
-                    print(f"Failed to combine files for {item_path}")
+                try:
+                    success = combine_wav_files(left_path, right_path, output_file, target_sample_rate)
+                    if success:
+                        sample_count += 1
+                    else:
+                        print(f"Failed to combine files for {item_path}")
+                except Exception as e:
+                    print(f"Error processing {item_path}: {e}")
+                    print(f"Skipping this file and continuing...")
             else:
                 missing = []
                 if not os.path.exists(left_path): missing.append(left_file)
@@ -412,25 +416,70 @@ def process_numeric_directories(source_dir, target_dir, left_file, right_file, c
             # Just copy a single file but ensure consistent sample rate
             source_file = os.path.join(item_path, right_file)
             if os.path.exists(source_file):
-                if is_ffmpeg_available():
-                    # Convert to target sample rate using ffmpeg
-                    cmd = [
-                        "ffmpeg",
-                        "-i", source_file,
-                        "-ar", str(target_sample_rate),  # Set target sample rate
-                        "-y",  # Overwrite output file if it exists
-                        output_file
-                    ]
-                    subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                    print(f"Converted {source_file} to {output_file} at {target_sample_rate}Hz")
-                else:
-                    # Just copy if ffmpeg is not available
-                    shutil.copy2(source_file, output_file)
-                    print(f"Copied {source_file} to {output_file} (could not set sample rate)")
-                
-                sample_count += 1
+                try:
+                    if is_ffmpeg_available():
+                        # Convert to target sample rate using ffmpeg
+                        cmd = [
+                            "ffmpeg",
+                            "-i", source_file,
+                            "-ar", str(target_sample_rate),  # Set target sample rate
+                            "-y",  # Overwrite output file if it exists
+                            output_file
+                        ]
+                        subprocess.run(cmd, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                        print(f"Converted {source_file} to {output_file} at {target_sample_rate}Hz")
+                    else:
+                        # Just copy if ffmpeg is not available
+                        shutil.copy2(source_file, output_file)
+                        print(f"Copied {source_file} to {output_file} (could not set sample rate)")
+                    
+                    sample_count += 1
+                except Exception as e:
+                    print(f"Error processing {source_file}: {e}")
+                    print(f"Skipping this file and continuing...")
             else:
                 print(f"Missing file for {item_path}: {right_file}")
+
+# Process ICC backchannel models
+def process_icc_backchannel(target_base_path):
+    source_dir_path = os.path.join(source_dir, "icc")
+    
+    # Process freeze_omni model
+    source_freezeomni = os.path.join(source_dir_path, "freeze-omni")
+    if os.path.exists(source_freezeomni):
+        target_freezeomni_dir = os.path.join(target_base_path, "backchannel", "icc", "freezeomni")
+        os.makedirs(target_freezeomni_dir, exist_ok=True)
+        
+        # Get all numeric directories (1, 2, 3, 4, 5)
+        dir_items = [item for item in os.listdir(source_freezeomni) if item.isdigit() and os.path.isdir(os.path.join(source_freezeomni, item))]
+        dir_items.sort(key=int)
+        
+        print(f"Processing {source_freezeomni}, found directories: {dir_items}")
+        
+        sample_count = 1
+        for item in dir_items:
+            item_path = os.path.join(source_freezeomni, item)
+            output_file = os.path.join(target_freezeomni_dir, f"sample_{sample_count}.wav")
+            
+            # Combine input.wav and output.wav
+            left_file = os.path.join(item_path, "input.wav")
+            right_file = os.path.join(item_path, "output.wav")
+            
+            if os.path.exists(left_file) and os.path.exists(right_file):
+                success = combine_wav_files(left_file, right_file, output_file, target_sample_rate=48000)
+                if success:
+                    sample_count += 1
+                else:
+                    print(f"Failed to combine files for {item_path}")
+            else:
+                missing = []
+                if not os.path.exists(left_file): missing.append("input.wav")
+                if not os.path.exists(right_file): missing.append("output.wav")
+                print(f"Missing files for {item_path}: {', '.join(missing)}")
+        
+        print(f"Processing completed for ICC/freeze-omni. Created {sample_count-1} sample files.")
+    else:
+        print(f"Source directory not found: {source_freezeomni}")
 
 # Main function
 def main():
@@ -455,6 +504,9 @@ def main():
     
     # Process synthetic_pause models
     process_synthetic_pause(target_dir)
+    
+    # Process ICC backchannel models
+    process_icc_backchannel(target_dir)
     
 if __name__ == "__main__":
     main()
