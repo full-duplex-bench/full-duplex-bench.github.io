@@ -263,20 +263,15 @@ def process_turntaking_models(target_base_path):
                 else:
                     print(f"Missing stereo file for {item_path}: dgslm_output_stereo.wav")
                 
-                # Process moshi - combine input.wav with moshi_out_turn_taking.wav
-                input_wav = os.path.join(item_path, "input.wav")
+                # Process moshi - just copy moshi_out_turn_taking.wav directly
                 moshi_wav = os.path.join(item_path, "moshi_out_turn_taking.wav")
                 
-                if os.path.exists(input_wav) and os.path.exists(moshi_wav):
+                if os.path.exists(moshi_wav):
                     output_file = os.path.join(target_moshi_dir, f"sample_{sample_count}.wav")
-                    success = combine_wav_files(input_wav, moshi_wav, output_file)
-                    if not success:
-                        print(f"Failed to combine files for moshi: {item_path}")
+                    shutil.copy2(moshi_wav, output_file)
+                    print(f"Copied {moshi_wav} to {output_file}")
                 else:
-                    missing = []
-                    if not os.path.exists(input_wav): missing.append("input.wav")
-                    if not os.path.exists(moshi_wav): missing.append("moshi_out_turn_taking.wav")
-                    print(f"Missing files for moshi in {item_path}: {', '.join(missing)}")
+                    print(f"Missing file for moshi in {item_path}: moshi_out_turn_taking.wav")
                 
                 sample_count += 1
         
@@ -336,9 +331,9 @@ def process_synthetic_pause(target_base_path):
         process_numeric_directories(
             source_dgslm, 
             target_dgslm_dir, 
-            "input.wav", 
+            None, 
             "dgslm_output_stereo.wav",
-            combine=True
+            combine=False
         )
         print("Processing completed for synthetic_pause/dgslm directory.")
     else:
